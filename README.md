@@ -61,8 +61,8 @@ The CNN model consists of:
 
 The model achieved approximately:
 
-* **Test Accuracy:** 98.9%
-* **Validation Accuracy:** 98.9%
+* **Test Accuracy:** 99.1%
+* **Validation Accuracy:** 99.1%
 
 This demonstrates the effectiveness of Convolutional Neural Networks for image classification tasks.
 
