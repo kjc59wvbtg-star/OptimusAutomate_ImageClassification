@@ -16,20 +16,53 @@ x_test = x_test / 255.0
 x_train = x_train.reshape(-1, 28, 28, 1)
 x_test = x_test.reshape(-1, 28, 28, 1)
 
-# Build CNN Model
+# ----------------------------
+# Data Augmentation
+# ----------------------------
+data_augmentation = tf.keras.Sequential([
+    layers.RandomRotation(0.1),
+    layers.RandomZoom(0.1),
+    layers.RandomTranslation(0.1, 0.1)
+])
+
+# ----------------------------
+# CNN Model
+# ----------------------------
 model = models.Sequential([
-    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+
+    data_augmentation,
+
+    layers.Conv2D(
+        32,
+        (3, 3),
+        activation='relu',
+        input_shape=(28, 28, 1)
+    ),
+
     layers.MaxPooling2D((2, 2)),
 
-    layers.Conv2D(64, (3, 3), activation='relu'),
+    layers.Conv2D(
+        64,
+        (3, 3),
+        activation='relu'
+    ),
+
     layers.MaxPooling2D((2, 2)),
 
     layers.Flatten(),
 
-    layers.Dense(128, activation='relu'),
+    layers.Dense(
+        128,
+        activation='relu'
+    ),
+
+    # Dropout Regularization
     layers.Dropout(0.5),
 
-    layers.Dense(10, activation='softmax')
+    layers.Dense(
+        10,
+        activation='softmax'
+    )
 ])
 
 # Compile Model
@@ -48,7 +81,10 @@ history = model.fit(
 )
 
 # Evaluate Model
-test_loss, test_acc = model.evaluate(x_test, y_test)
+test_loss, test_acc = model.evaluate(
+    x_test,
+    y_test
+)
 
 print("\nTest Accuracy:", test_acc)
 
@@ -73,7 +109,7 @@ plt.ylabel('Accuracy')
 plt.legend()
 
 plt.savefig('accuracy_plot.png')
-plt.show()
+plt.close()
 
 # ----------------------------
 # Confusion Matrix
@@ -103,4 +139,7 @@ plt.xlabel('Predicted Label')
 plt.ylabel('True Label')
 
 plt.savefig('confusion_matrix.png')
-plt.show()
+plt.close()
+
+print("Accuracy Plot Saved")
+print("Confusion Matrix Saved")
