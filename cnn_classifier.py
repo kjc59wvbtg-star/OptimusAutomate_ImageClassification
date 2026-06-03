@@ -5,29 +5,20 @@ from sklearn.metrics import confusion_matrix
 import seaborn as sns
 import numpy as np
 
-# Load MNIST dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
-# Normalize images
 x_train = x_train / 255.0
 x_test = x_test / 255.0
 
-# Reshape for CNN
 x_train = x_train.reshape(-1, 28, 28, 1)
 x_test = x_test.reshape(-1, 28, 28, 1)
 
-# ----------------------------
 # Data Augmentation
-# ----------------------------
 data_augmentation = tf.keras.Sequential([
     layers.RandomRotation(0.1),
     layers.RandomZoom(0.1),
     layers.RandomTranslation(0.1, 0.1)
 ])
-
-# ----------------------------
-# CNN Model
-# ----------------------------
 model = models.Sequential([
 
     data_augmentation,
@@ -79,30 +70,24 @@ history = model.fit(
     epochs=5,
     validation_split=0.2
 )
-
 # Evaluate Model
 test_loss, test_acc = model.evaluate(
     x_test,
     y_test
 )
-
 print("\nTest Accuracy:", test_acc)
 
-# ----------------------------
 # Accuracy Plot
-# ----------------------------
 plt.figure(figsize=(8, 5))
 
 plt.plot(
     history.history['accuracy'],
     label='Training Accuracy'
 )
-
 plt.plot(
     history.history['val_accuracy'],
     label='Validation Accuracy'
 )
-
 plt.title('Model Accuracy')
 plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
@@ -110,7 +95,6 @@ plt.legend()
 
 plt.savefig('accuracy_plot.png')
 plt.close()
-
 # ----------------------------
 # Confusion Matrix
 # ----------------------------
