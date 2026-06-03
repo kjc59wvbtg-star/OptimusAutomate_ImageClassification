@@ -15,7 +15,7 @@ This project implements a Convolutional Neural Network (CNN) using TensorFlow to
 * Accuracy visualization
 * Confusion matrix generation
 * Model performance evaluation
-* Test accuracy of approximately **98.9%**
+* Test accuracy of approximately **99.1%**
 
 ---
 
